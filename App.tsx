@@ -17,7 +17,7 @@ import { useStore } from './store';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   
   // Modal State from Store
   const activeModal = useStore(state => state.activeModal);
@@ -49,10 +49,12 @@ function App() {
           if (response.ok) {
               setFormStatus('success');
           } else {
-              setFormStatus('idle');
+              setFormStatus('error');
+              console.error('Form submission failed with status:', response.status);
           }
       } catch (error) {
-          setFormStatus('idle');
+          setFormStatus('error');
+          console.error('Form submission error:', error);
       }
   };
 
@@ -113,6 +115,17 @@ function App() {
                 <h3 className="text-2xl font-bold text-white mb-2">Application Received</h3>
                 <p className="text-gray-400">Our team will review your details and contact you within 48 hours.</p>
                 <button onClick={closeModal} className="mt-8 text-brand-cyan hover:underline">Close</button>
+            </div>
+        ) : formStatus === 'error' ? (
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+                <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mb-4">
+                    <X className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Submission Failed</h3>
+                <p className="text-gray-400 mb-4">There was an error submitting your application. Please try again or contact us directly.</p>
+                <button onClick={() => setFormStatus('idle')} className="mt-4 bg-brand-green text-black font-bold py-2 px-6 rounded hover:bg-brand-green/90 transition-colors">
+                    Try Again
+                </button>
             </div>
         ) : (
             <form onSubmit={handleSubmit} className="space-y-4">

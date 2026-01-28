@@ -179,7 +179,11 @@ const LayerMesh: React.FC<{
 
           {isExploded && hovered && (
               <Html distanceFactor={10}>
-              <div className="bg-black/80 backdrop-blur-md border border-brand-green/30 p-2 rounded text-xs w-32 text-white pointer-events-none transform translate-x-4">
+              <div 
+                className="bg-black/80 backdrop-blur-md border border-brand-green/30 p-2 rounded text-xs w-32 text-white pointer-events-none transform translate-x-4"
+                role="tooltip"
+                aria-label={`${layer.name}: Detailed component function description`}
+              >
                   <strong className="block text-brand-green">{layer.name}</strong>
                   <span className="text-gray-300">Detailed component function description here.</span>
               </div>
