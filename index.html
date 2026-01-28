@@ -1,13 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StaroCell - Next Generation Battery Technology</title>
-    <script type="module" crossorigin src="./assets/index-AuoM4beB.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Dei7pDk7.css">
-  </head>
+    <title>StaroCell | Next-Gen Bio Battery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                black: '#050505',
+                green: '#10b981',
+                cyan: '#06b6d4',
+                gray: '#525252',
+                light: '#e5e5e5'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+      body { margin: 0; background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
+      /* Hide scrollbar for cleaner look */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #050505; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #555; }
+      
+      .modal-scroll::-webkit-scrollbar { width: 6px; }
+      .modal-scroll::-webkit-scrollbar-track { background: #111; }
+      .modal-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    </style>
+  <script type="module" crossorigin src="./assets/index-CMtz4l2K.js"></script>
+</head>
   <body>
     <div id="root"></div>
-  </body>
+</body>
 </html>
