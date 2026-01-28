@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -6,15 +6,17 @@ import * as THREE from 'three';
 const ParticleSystem: React.FC = () => {
   const ref = useRef<THREE.Points>(null);
   
-  // Generate random particles
+  // Generate random particles - memoized to avoid regeneration on every render
   const particlesCount = 1000;
-  const positions = new Float32Array(particlesCount * 3);
-  
-  for(let i = 0; i < particlesCount; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 20; // x
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 20; // y
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 10 - 5; // z
-  }
+  const positions = useMemo(() => {
+    const pos = new Float32Array(particlesCount * 3);
+    for(let i = 0; i < particlesCount; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 20; // x
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 20; // y
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 10 - 5; // z
+    }
+    return pos;
+  }, []);
 
   useFrame((state, delta) => {
     if (ref.current) {

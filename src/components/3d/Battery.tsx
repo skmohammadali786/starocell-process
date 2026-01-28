@@ -5,12 +5,26 @@ import { Section } from '../../types';
 import * as THREE from 'three';
 import { Html } from '@react-three/drei';
 
+interface BatteryLayer {
+  id: string;
+  name: string;
+  color: string;
+  radius: number;
+  height: number;
+  baseY: number;
+  opacity: number;
+  transparent?: boolean;
+  metalness?: number;
+  roughness?: number;
+  hasLabel?: boolean;
+}
+
 const BatteryModel: React.FC = () => {
   const activeSection = useStore((state) => state.activeSection);
   const groupRef = useRef<THREE.Group>(null);
   
   // Layers configuration matching StaroCell visual identity
-  const layers = useMemo(() => [
+  const layers = useMemo((): BatteryLayer[] => [
     // Internal Components
     { id: 'core', name: 'Energy Core', color: '#ffffff', radius: 0.5, height: 3, baseY: 0, opacity: 1 },
     { id: 'electrolyte', name: 'Bio Electrolyte', color: '#10b981', radius: 0.8, height: 3.1, baseY: 0, opacity: 0.6, transparent: true },
@@ -131,7 +145,7 @@ const BatteryModel: React.FC = () => {
 };
 
 const LayerMesh: React.FC<{ 
-  layer: any, 
+  layer: BatteryLayer, 
   index: number, 
   expansionFactor: React.MutableRefObject<number>,
   isExploded: boolean

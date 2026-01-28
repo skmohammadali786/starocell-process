@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -10,6 +10,18 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,7 +41,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
           >
             <div className="flex justify-between items-center p-6 border-b border-white/5 bg-white/5">
               <h3 className="text-xl font-bold text-white tracking-tight">{title}</h3>
-              <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-colors group">
+              <button 
+                onClick={onClose} 
+                className="p-2 hover:bg-white/10 rounded-full transition-colors group"
+                aria-label="Close modal"
+              >
                 <X className="w-5 h-5 text-gray-400 group-hover:text-white" />
               </button>
             </div>

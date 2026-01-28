@@ -9,7 +9,7 @@ const Scene: React.FC = () => {
     <div className="fixed inset-0 z-0 bg-brand-black">
       <Canvas
         camera={{ position: [0, 0, 6], fov: 45 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "default" }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         dpr={[1, 1.5]}
       >
         <Suspense fallback={null}>

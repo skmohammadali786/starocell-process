@@ -17,7 +17,8 @@ import { useStore } from './store';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formError, setFormError] = useState<string>('');
   
   // Modal State from Store
   const activeModal = useStore(state => state.activeModal);
@@ -34,6 +35,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setFormStatus('submitting');
+      setFormError('');
 
       const formData = new FormData(e.currentTarget);
       
@@ -49,16 +51,21 @@ function App() {
           if (response.ok) {
               setFormStatus('success');
           } else {
-              setFormStatus('idle');
+              setFormStatus('error');
+              setFormError('Failed to submit. Please try again.');
           }
       } catch (error) {
-          setFormStatus('idle');
+          setFormStatus('error');
+          setFormError('Network error. Please check your connection and try again.');
       }
   };
 
   // Reset form when modal closes
   React.useEffect(() => {
-      if(!activeModal) setFormStatus('idle');
+      if(!activeModal) {
+        setFormStatus('idle');
+        setFormError('');
+      }
   }, [activeModal]);
 
   return (
@@ -120,11 +127,16 @@ function App() {
                     We are currently accepting applications for pilot programs in the Automotive and Utility sectors. 
                     Please provide your organization details.
                 </p>
+                {formStatus === 'error' && (
+                    <div className="bg-red-500/10 border border-red-500/30 p-3 rounded text-red-400 text-sm">
+                        {formError}
+                    </div>
+                )}
                 <input name="name" required type="text" placeholder="Full Name" className="w-full bg-black/50 border border-white/20 p-3 rounded focus:border-brand-green outline-none text-white focus:bg-black/80 transition-all" />
                 <input name="email" required type="email" placeholder="Work Email" className="w-full bg-black/50 border border-white/20 p-3 rounded focus:border-brand-green outline-none text-white focus:bg-black/80 transition-all" />
                 <input name="company" required type="text" placeholder="Company / Organization" className="w-full bg-black/50 border border-white/20 p-3 rounded focus:border-brand-green outline-none text-white focus:bg-black/80 transition-all" />
-                <select name="sector" className="w-full bg-black/50 border border-white/20 p-3 rounded focus:border-brand-green outline-none text-white focus:bg-black/80 transition-all">
-                    <option value="" disabled selected>Industry Sector</option>
+                <select name="sector" required className="w-full bg-black/50 border border-white/20 p-3 rounded focus:border-brand-green outline-none text-white focus:bg-black/80 transition-all">
+                    <option value="" disabled>Industry Sector</option>
                     <option value="ev">Automotive / EV</option>
                     <option value="grid">Grid Storage</option>
                     <option value="consumer">Consumer Electronics</option>
