@@ -1,13 +1,254 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StaroCell - Next Generation Battery Technology</title>
-    <script type="module" crossorigin src="./assets/index-AuoM4beB.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Dei7pDk7.css">
-  </head>
+    <title>StaroCell | Next-Gen Bio Battery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              border: 'hsl(var(--border))',
+              input: 'hsl(var(--input))',
+              ring: 'hsl(var(--ring))',
+              background: 'hsl(var(--background))',
+              foreground: 'hsl(var(--foreground))',
+              primary: {
+                DEFAULT: 'hsl(var(--primary))',
+                foreground: 'hsl(var(--primary-foreground))',
+              },
+              secondary: {
+                DEFAULT: 'hsl(var(--secondary))',
+                foreground: 'hsl(var(--secondary-foreground))',
+              },
+              destructive: {
+                DEFAULT: 'hsl(var(--destructive))',
+                foreground: 'hsl(var(--destructive-foreground))',
+              },
+              muted: {
+                DEFAULT: 'hsl(var(--muted))',
+                foreground: 'hsl(var(--muted-foreground))',
+              },
+              accent: {
+                DEFAULT: 'hsl(var(--accent))',
+                foreground: 'hsl(var(--accent-foreground))',
+              },
+              popover: {
+                DEFAULT: 'hsl(var(--popover))',
+                foreground: 'hsl(var(--popover-foreground))',
+              },
+              card: {
+                DEFAULT: 'hsl(var(--card))',
+                foreground: 'hsl(var(--card-foreground))',
+              },
+              brand: {
+                black: '#050505',
+                green: '#10b981',
+                cyan: '#06b6d4',
+                gray: '#525252',
+                light: '#e5e5e5'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+      body { margin: 0; background-color: #050505; color: #e5e5e5; overflow-x: hidden; }
+      /* Hide scrollbar for cleaner look */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #050505; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+      .modal-scroll::-webkit-scrollbar { width: 6px; }
+      .modal-scroll::-webkit-scrollbar-track { background: #111; }
+      .modal-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+      /* ENGINEER VIEW STYLES (Restored) */
+      .btn-industrial{border-width:1px;border-color:hsl(var(--foreground) / .3);background-color:hsl(var(--background) / .8);padding:.75rem 1.5rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:.75rem;line-height:1rem;text-transform:uppercase;letter-spacing:.1em;color:hsl(var(--foreground));--tw-backdrop-blur: blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;font-family:JetBrains Mono,monospace}
+      .btn-industrial:hover{background-color:hsl(var(--foreground));color:hsl(var(--background))}
+      .btn-industrial:hover{transform:translateY(-1px)}
+      .btn-industrial:active{transform:translateY(0)}
+      .btn-industrial{padding:.5rem 1rem;font-size:10px}
+      .data-overlay{border-width:1px;border-color:hsl(var(--border));background-color:hsl(var(--background) / .9);padding:1rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:.75rem;line-height:1rem;--tw-backdrop-blur: blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);font-family:JetBrains Mono,monospace}
+      .data-overlay{animation:fadeIn .2s ease-out}
+      .data-overlay{padding:.75rem}
+      .graph-line{stroke:hsl(var(--foreground));stroke-width:1.5;fill:none}
+      .graph-line{stroke-dasharray:1000;stroke-dashoffset:1000;animation:drawLine 1s ease-out forwards}
+      .graph-grid{stroke:hsl(var(--muted));stroke-width:.5;opacity:.3}
+      .metric-value{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:1.5rem;line-height:2rem;font-weight:500;letter-spacing:-.025em;font-family:JetBrains Mono,monospace}
+      .metric-value{transition:color .2s ease}
+      .metric-value{font-size:1.25rem}
+      .metric-label{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:hsl(var(--muted-foreground));font-family:JetBrains Mono,monospace}
+      .section-label{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-size:.75rem;line-height:1rem;text-transform:uppercase;letter-spacing:.1em;color:hsl(var(--muted-foreground));font-family:JetBrains Mono,monospace}
+      .industrial-slider{-webkit-appearance:none;-moz-appearance:none;appearance:none;width:100%;height:2px;background:hsl(var(--muted));outline:none;cursor:pointer}
+      .industrial-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:14px;background:hsl(var(--foreground));cursor:pointer;border-radius:0;-webkit-transition:transform .1s;transition:transform .1s}
+      .industrial-slider::-webkit-slider-thumb:hover{transform:scale(1.1)}
+      .industrial-slider::-moz-range-thumb{width:14px;height:14px;background:hsl(var(--foreground));cursor:pointer;border-radius:0;border:none}
+      .industrial-slider:focus{outline:none}
+      .industrial-slider:focus::-webkit-slider-thumb{background:hsl(var(--foreground));box-shadow:0 0 0 2px hsl(var(--background)),0 0 0 4px hsl(var(--foreground))}
+      .progress-bar{position:fixed;top:0;left:0;z-index:50;height:2px;background-color:hsl(var(--foreground));transform-origin:left}
+      @keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes drawLine{to{stroke-dashoffset:0}}
+      @keyframes safetyPulse{0%,to{opacity:1}50%{opacity:.5}}
+      .safety-indicator{height:.5rem;width:.5rem;background-color:hsl(var(--foreground) / .6);transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+      .safety-indicator.active{background-color:hsl(var(--foreground))}
+      .safety-indicator.active{animation:safetyPulse 1s ease-in-out infinite}:root{--background: 0 0% 3%;--foreground: 0 0% 95%;--card: 0 0% 5%;--card-foreground: 0 0% 95%;--popover: 0 0% 5%;--popover-foreground: 0 0% 95%;--primary: 0 0% 95%;--primary-foreground: 0 0% 3%;--secondary: 0 0% 10%;--secondary-foreground: 0 0% 95%;--muted: 0 0% 12%;--muted-foreground: 0 0% 50%;--accent: 0 0% 15%;--accent-foreground: 0 0% 95%;--destructive: 0 60% 40%;--destructive-foreground: 0 0% 98%;--border: 0 0% 15%;--input: 0 0% 15%;--ring: 0 0% 80%;--radius: .25rem}
+
+      /* Starocell content styles are handled by the bundle.
+         We only ensure our custom Engineer View sits on top. */
+    </style>
+  <script type="module" crossorigin src="./assets/index-CMtz4l2K.js"></script>
+</head>
   <body>
     <div id="root"></div>
-  </body>
+
+<!-- Button (Restored) -->
+<!-- Positioned below navbar (top-20) and high z-index to stay on top -->
+<div class="fixed top-20 right-4 md:right-8 z-[100] pointer-events-auto">
+  <button id="engineer-btn" class="btn-industrial">Engineer View</button>
+</div>
+
+<!-- Overlay Container (Restored) -->
+<!-- pointer-events-none ensures we can scroll the page behind the HUD -->
+<div id="engineer-overlay" class="hidden fixed inset-0 z-[90] overflow-y-auto p-4 md:overflow-visible md:p-0 pointer-events-none">
+
+  <!-- Real-time Metrics -->
+  <div class="relative mb-4 md:absolute md:top-24 md:left-8 md:mb-0 data-overlay w-full md:w-64 pointer-events-auto">
+    <p class="section-label mb-4">Real-time Metrics</p>
+    <div class="space-y-4">
+      <div>
+        <p class="metric-label">Voltage</p>
+        <p class="metric-value" id="metric-voltage">3.65V</p>
+      </div>
+      <div>
+        <p class="metric-label">Capacity</p>
+        <p class="metric-value" id="metric-capacity">92.5%</p>
+      </div>
+      <div>
+        <p class="metric-label">Efficiency</p>
+        <p class="metric-value" id="metric-efficiency">97.5%</p>
+      </div>
+      <div>
+        <p class="metric-label">Cycle Count</p>
+        <p class="metric-value" id="metric-cycles">5000</p>
+      </div>
+      <div>
+        <p class="metric-label">Internal Resistance</p>
+        <p class="metric-value" id="metric-resistance">0.040Ω</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discharge Curve -->
+  <div class="relative mb-4 md:absolute md:bottom-8 md:left-8 md:mb-0 data-overlay w-full md:w-64 pointer-events-auto">
+    <p class="section-label mb-4">Discharge Curve</p>
+    <svg viewBox="0 0 100 60" class="w-full h-32">
+      <line x1="0" y1="0" x2="0" y2="60" class="graph-grid"></line>
+      <line x1="25" y1="0" x2="25" y2="60" class="graph-grid"></line>
+      <line x1="50" y1="0" x2="50" y2="60" class="graph-grid"></line>
+      <line x1="75" y1="0" x2="75" y2="60" class="graph-grid"></line>
+      <line x1="100" y1="0" x2="100" y2="60" class="graph-grid"></line>
+      <line x1="0" y1="60" x2="100" y2="60" class="graph-grid"></line>
+      <line x1="0" y1="40" x2="100" y2="40" class="graph-grid"></line>
+      <line x1="0" y1="20" x2="100" y2="20" class="graph-grid"></line>
+      <line x1="0" y1="0" x2="100" y2="0" class="graph-grid"></line>
+      <polyline points="0,0 10,2 20,6 30,12 40,18 50,22 60,25 70,26 80,29 90,35 100,41" class="graph-line"></polyline>
+      <circle cx="50" cy="27.5" r="3" fill="currentColor"></circle>
+    </svg>
+    <div class="flex justify-between mt-2">
+      <span class="font-mono text-[10px] text-muted-foreground">0%</span>
+      <span class="font-mono text-[10px] text-muted-foreground">SOC</span>
+      <span class="font-mono text-[10px] text-muted-foreground">100%</span>
+    </div>
+  </div>
+
+  <!-- Efficiency vs Cycles -->
+  <div class="relative mb-4 md:absolute md:bottom-8 md:right-8 md:mb-0 data-overlay w-full md:w-64 pointer-events-auto">
+    <p class="section-label mb-4">Efficiency vs Cycles</p>
+    <svg viewBox="0 0 100 60" class="w-full h-32">
+      <line x1="0" y1="0" x2="0" y2="60" class="graph-grid"></line>
+      <line x1="25" y1="0" x2="25" y2="60" class="graph-grid"></line>
+      <line x1="50" y1="0" x2="50" y2="60" class="graph-grid"></line>
+      <line x1="75" y1="0" x2="75" y2="60" class="graph-grid"></line>
+      <line x1="100" y1="0" x2="100" y2="60" class="graph-grid"></line>
+      <line x1="0" y1="60" x2="100" y2="60" class="graph-grid"></line>
+      <line x1="0" y1="45" x2="100" y2="45" class="graph-grid"></line>
+      <line x1="0" y1="30" x2="100" y2="30" class="graph-grid"></line>
+      <line x1="0" y1="15" x2="100" y2="15" class="graph-grid"></line>
+      <line x1="0" y1="0" x2="100" y2="0" class="graph-grid"></line>
+      <polyline points="0,0 10,6 20,14 30,23 40,30 50,33 60,34 70,34.5 80,36 90,41 100,49" class="graph-line"></polyline>
+      <circle cx="100" cy="7.5" r="3" fill="currentColor"></circle>
+    </svg>
+    <div class="flex justify-between mt-2">
+      <span class="font-mono text-[10px] text-muted-foreground">0</span>
+      <span class="font-mono text-[10px] text-muted-foreground">Cycles</span>
+      <span class="font-mono text-[10px] text-muted-foreground">5000</span>
+    </div>
+  </div>
+
+  <!-- Specifications -->
+  <!-- Moved down to top-40 to avoid overlap with button -->
+  <div class="relative md:absolute md:top-40 md:right-8 data-overlay w-full md:w-56 pointer-events-auto">
+    <p class="section-label mb-4">Specifications</p>
+    <div class="space-y-2 font-mono text-xs">
+      <div class="flex justify-between"><span class="text-muted-foreground">Nominal Voltage</span><span>3.7V</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Capacity</span><span>100 Ah</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Energy Density</span><span>300 Wh/kg</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Cycle Life</span><span>5000+</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Operating Temp</span><span>-20 to 60°C</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Charge Rate</span><span>3C</span></div>
+      <div class="flex justify-between"><span class="text-muted-foreground">Discharge Rate</span><span>5C</span></div>
+    </div>
+  </div>
+
+</div>
+
+    <script>
+      // Wait for DOM
+      window.addEventListener('load', () => {
+        const btn = document.getElementById('engineer-btn');
+        const overlay = document.getElementById('engineer-overlay');
+
+        if (!btn || !overlay) {
+            console.error('Engineer view elements not found');
+            return;
+        }
+
+        // Simulate real-time metrics
+        function updateMetrics() {
+            if (overlay.classList.contains('hidden')) return;
+
+            const v = document.getElementById('metric-voltage');
+            if(v) v.innerText = (3.6 + Math.random() * 0.1).toFixed(2) + 'V';
+
+            const r = document.getElementById('metric-resistance');
+            if(r) r.innerText = (0.038 + Math.random() * 0.004).toFixed(3) + 'Ω';
+        }
+
+        let interval;
+
+        btn.addEventListener('click', () => {
+          const isHidden = overlay.classList.contains('hidden');
+          if (isHidden) {
+            overlay.classList.remove('hidden');
+            btn.innerText = 'Close Engineer View';
+            updateMetrics();
+            interval = setInterval(updateMetrics, 2000);
+          } else {
+            overlay.classList.add('hidden');
+            btn.innerText = 'Engineer View';
+            clearInterval(interval);
+          }
+        });
+      });
+    </script>
+</body>
 </html>
